@@ -26,20 +26,20 @@ jobs:
         run-as-user: root
 
     - name: Scan image
-      id: scan_vote
-      uses: sysdiglabs/scan-action@v3
-      with:
-        image-tag: "sysdiglabs/vote-vuln-app:latest"
-        sysdig-secure-url: "https://us2.app.sysdig.com"
-        sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
-        input-type: docker-daemon
-        run-as-user: root
-
-    - name: Scan image
       id: scan_result
       uses: sysdiglabs/scan-action@v3
       with:
         image-tag: "sysdiglabs/result-vuln-app:latest"
+        sysdig-secure-url: "https://us2.app.sysdig.com"
+        sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
+        input-type: docker-daemon
+        run-as-user: root
+        
+    - name: Scan image
+      id: scan_vote
+      uses: sysdiglabs/scan-action@v3
+      with:
+        image-tag: "sysdiglabs/vote-vuln-app:latest"
         sysdig-secure-url: "https://us2.app.sysdig.com"
         sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
         input-type: docker-daemon
