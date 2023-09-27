@@ -7,13 +7,13 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Build the Worker Docker image
-      run: docker build ${{ github.workspace }}/example-voting-app/worker --file Dockerfile --tag sysdiglabs/worker-vuln-app:latest
+      run: docker build ${{ github.workspace }}/worker --file Dockerfile --tag sysdiglabs/worker-vuln-app:latest
 
     - name: Build the Vote Docker image
-      run: docker build ${{ github.workspace }}/example-voting-app/vote --file Dockerfile --tag sysdiglabs/vote-vuln-app:latest
+      run: docker build ${{ github.workspace }}/vote --file Dockerfile --tag sysdiglabs/vote-vuln-app:latest
 
     - name: Build the Result Docker image
-      run: docker build ${{ github.workspace }}/example-voting-app/result --file Dockerfile --tag sysdiglabs/result-vuln-app:latest
+      run: docker build ${{ github.workspace }}/result --file Dockerfile --tag sysdiglabs/result-vuln-app:latest
 
     - name: Scan image
       id: scan_worker
