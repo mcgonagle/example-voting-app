@@ -1,0 +1,51 @@
+name: Build and Scan
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build the Worker Docker image
+      run: docker build ./worker --file Dockerfile --tag sysdiglabs/worker-vuln-app:latest
+
+    - name: Build the Vote Docker image
+      run: docker build ./vote --file Dockerfile --tag sysdiglabs/vote-vuln-app:latest
+
+    - name: Build the Result Docker image
+      run: docker build ./result --file Dockerfile --tag sysdiglabs/result-vuln-app:latest
+
+    - name: Scan image
+      id: scan
+      uses: sysdiglabs/scan-action@v3
+      with:
+        image-tag: "sysdiglabs/worker-vuln-app:latest"
+        sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
+        input-type: docker-daemon
+        run-as-user: root
+
+    - name: Scan image
+      id: scan
+      uses: sysdiglabs/scan-action@v3
+      with:
+        image-tag: "sysdiglabs/vote-vuln-app:latest"
+        sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
+        input-type: docker-daemon
+        run-as-user: root
+
+    - name: Scan image
+      id: scan
+      uses: sysdiglabs/scan-action@v3
+      with:
+        image-tag: "sysdiglabs/result-vuln-app:latest"
+        sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
+        input-type: docker-daemon
+        run-as-user: root
+
+      - uses: github/codeql-action/upload-sarif@v1
+        if: always()
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarifReport }}
+
