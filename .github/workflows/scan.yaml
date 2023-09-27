@@ -10,10 +10,10 @@ jobs:
       run: docker build ${{ github.workspace }}/worker --file ${{ github.workspace }}/worker/Dockerfile --tag sysdiglabs/worker-vuln-app:latest
 
     - name: Build the Vote Docker image
-      run: docker build ${{ github.workspace }}/vote --file ${{ github.workspace }}/worker/Dockerfile --tag sysdiglabs/vote-vuln-app:latest
+      run: docker build ${{ github.workspace }}/vote --file ${{ github.workspace }}/vote/Dockerfile --tag sysdiglabs/vote-vuln-app:latest
 
     - name: Build the Result Docker image
-      run: docker build ${{ github.workspace }}/result --file ${{ github.workspace }}/worker/Dockerfile --tag sysdiglabs/result-vuln-app:latest
+      run: docker build ${{ github.workspace }}/result --file ${{ github.workspace }}/result/Dockerfile --tag sysdiglabs/result-vuln-app:latest
 
     - name: Scan image
       id: scan_worker
