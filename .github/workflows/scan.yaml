@@ -16,7 +16,7 @@ jobs:
       run: docker build ./result --file Dockerfile --tag sysdiglabs/result-vuln-app:latest
 
     - name: Scan image
-      id: scan
+      id: scan_worker
       uses: sysdiglabs/scan-action@v3
       with:
         image-tag: "sysdiglabs/worker-vuln-app:latest"
@@ -25,7 +25,7 @@ jobs:
         run-as-user: root
 
     - name: Scan image
-      id: scan
+      id: scan_vote
       uses: sysdiglabs/scan-action@v3
       with:
         image-tag: "sysdiglabs/vote-vuln-app:latest"
@@ -34,7 +34,7 @@ jobs:
         run-as-user: root
 
     - name: Scan image
-      id: scan
+      id: scan_result
       uses: sysdiglabs/scan-action@v3
       with:
         image-tag: "sysdiglabs/result-vuln-app:latest"
